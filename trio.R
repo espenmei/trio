@@ -21,7 +21,7 @@ Dpm = A[pid, mid] + A[mid, pid]
 Dom = A[oid, mid] + A[mid, oid]
 Dop = A[oid, pid] + A[pid, oid]
 
-# Set up model with OpenMx
+# Set up model
 yX = cbind(dat@ped$pheno[oid], 1)
 colnames(yX) = c("y", "x")
 K = 1000 # Number of trios
@@ -49,12 +49,3 @@ mod = mxModel("trio",
 fitopenmx = mxRun(mod)
 summary(fitopenmx)
 mxEval(Sg, fitopenmx)
-
-# The same model can be fit with the gaston package
-# However, it not possible to force the genetic effects to have a valid covariance matrix as in the OpenMx model
-Rs = list(Amm, App, Aoo, Dpm, Dom, Dop)
-fitgaston = lmm.aireml(yX[, 1], K = Rs)
-fitgaston$BLUP_beta
-fitgaston$tau
-fitgaston$sigma2
-fitgaston$logL
