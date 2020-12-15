@@ -25,11 +25,11 @@ Dop = A[oid, pid] + A[pid, oid]
 yX = cbind(dat@ped$pheno[oid], 1)
 colnames(yX) = c("y", "x")
 K = 1000 # Number of trios
-mod = mxModel("trio",
-              mxMatrix("Lo", 3, 3, T, sqrt(diag(var(yX[, 1]) / 4, 3)), c("l11", "l21", "l31", "l22", "l32", "l33"), name = "L"),
+modmx = mxModel("trio",
+              mxMatrix("Lo", 3, 3, T, sqrt(diag(var(yX[, 1]) / 4, 3)),
+                       c("l11", "l21", "l31", "l22", "l32", "l33"), name = "L"), # Cholesky factor of genetic covariance matrix
               mxAlgebra(L %*% t(L), name = "Sg"),
-              mxMatrix("Fu", 1, 1, T, var(yX[, 1]) / 4, "se", name = "Se"),
-              
+              mxMatrix("Fu", 1, 1, T, var(yX[, 1]) / 4, "se", name = "Se"), # Residual variance
               mxMatrix("Sy", K, K, F, Amm, name = "Amm"),
               mxMatrix("Sy", K, K, F, App, name = "App"),
               mxMatrix("Sy", K, K, F, Aoo, name = "Aoo"),
@@ -38,7 +38,7 @@ mod = mxModel("trio",
               mxMatrix("Sy", K, K, F, Dop, name = "Dop"),
               mxMatrix("Id", K, K, name = "I"),
               mxData(yX, "raw", sort = F),
-              
+              # Model implied covariance
               mxAlgebra(Sg[1, 1] * Amm + Sg[2, 2] * App + Sg[3, 3] * Aoo +
                           Sg[2, 1] * Dpm + Sg[3, 1] * Dom + Sg[3, 2] * Dop +
                           se * I, name = "V"),
@@ -46,6 +46,8 @@ mod = mxModel("trio",
               mxFitFunctionGREML())
 
 # Fit the model
-fitopenmx = mxRun(mod)
-summary(fitopenmx)
-mxEval(Sg, fitopenmx)
+modmx = mxRun(modmx)
+
+# Look at results
+summary(modmx)
+mxEval(Sg, modmx) # Genetic (co)variances
