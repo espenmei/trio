@@ -9,3 +9,7 @@ For example, individual 1, 1001 and 2001 is one trio.
 The data is stored in typical plink format with *.fam*, *.bed* and *.bim* files.
 
 The file *trio.R* uses **OpenMx** to fit the model in **R**.
+
+The file *trio.jl* uses **VCModels.jl** to fit the model in **Julia**.
+This code is currently experimental and not recommended for use.
+
