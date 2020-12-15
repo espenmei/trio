@@ -8,4 +8,4 @@ Within each group, the data is sorted according to trios.
 For example, individual 1, 1001 and 2001 is one trio.
 The data is stored in typical plink format with *.fam*, *.bed* and *.bim* files.
 
-The file trio.R uses **OpenMx** to fit the model in **R**.
+The file *trio.R* uses **OpenMx** to fit the model in **R**.
