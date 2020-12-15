@@ -2,8 +2,10 @@ library(genio) # Read plink format
 library(OpenMx) # Fit model
 library(gaston) # Compute GRM
 
+setwd("C:/Users/espenmei/OneDrive - Universitetet i Oslo/Prosjekter/GCTA/MFGCTA/BehaviorGenetics/V3/github")
+
 # Read data
-dat = read.bed.matrix("simdat")
+dat = read.bed.matrix("simtrio")
 
 # Compute GRM
 A = GRM(dat)
