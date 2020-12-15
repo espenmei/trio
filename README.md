@@ -10,6 +10,3 @@ The data is stored in typical plink format with *.fam*, *.bed* and *.bim* files.
 
 The file *trio.R* uses **OpenMx** to fit the model in **R**.
 
-The file *trio.jl* uses **VCModels.jl** to fit the model in **Julia**.
-This code is experimental and not currently recommended for use.
-
